@@ -1,16 +1,45 @@
 ---
-title: "Assg1_Stats_PreBayes"
+title: "Assigment 1. Statistical Theory and Modeling"
 format: html
+authors: "Caroline Birkehammar, Pablo Paras Ochoa, Steven Hiram Rubio Vasquez"
 editor: visual
 ---
 
-## Quarto
+## Assignment 1 
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+Import of the libraries and data...
 
-## Running Code
+```{r,warning=FALSE,message=FALSE}
+#| echo: false
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+library(tidyverse)
+library(ggplot2)
+
+
+data = read.csv("https://github.com/StatisticsSU/STM/raw/main/assignment/bugs.csv", header = TRUE) 
+```
+
+## Part 1 
+
+## Part 2 
+
+a\) After reading the bugs data and calculating lambda we try to fit an EXP distribution:
+
+```{r}
+
+y = data$nBugs # number of bugs, a vector with n = 91 observations
+lambda=mean(y)
+
+ggplot() + 
+  geom_histogram(aes(data$nBugs,after_stat(density)),bins = 20)+
+  geom_function(fun = function(x) lambda^x*exp(-lambda)/factorial(x)) 
+```
+
+b\)
+
+## Part 3
+
+## Example Code
 
 ```{r}
 1 + 1

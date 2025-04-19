@@ -35,7 +35,7 @@ p
 
 ####------- 
 # Part 2
-data_p2 = read.csv("https://github.com/StatisticsSU/STM/raw/main/assignment/bugs.csv", 
+data = read.csv("https://github.com/StatisticsSU/STM/raw/main/assignment/bugs.csv", 
                 header = TRUE)
 View(data_p2)
 
@@ -47,6 +47,8 @@ ggplot() +
   geom_histogram(aes(data_p2$nBugs,after_stat(density)),bins = 20)+
   geom_function(fun = function(x) lambda^x*exp(-lambda)/factorial(x)) 
 # 2b).
+# Try a negative binomial
+
 
 ####------
 # Part 3
