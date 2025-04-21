@@ -21,6 +21,8 @@ options(scipen=999)
 set.seed(42)
 
 data = read.csv("https://github.com/StatisticsSU/STM/raw/main/assignment/bugs.csv", header = TRUE) 
+
+
 ```
 
 ## Part 1
@@ -111,16 +113,41 @@ ggplot() +
 a\) After reading the bugs data and calculating lambda we try to fit an EXP distribution:
 
 ```{r}
-
 y = data$nBugs # number of bugs, a vector with n = 91 observations
 lambda=mean(y)
 
 ggplot() + 
-  geom_histogram(aes(data$nBugs,after_stat(density)),bins = 20)+
-  geom_function(fun = function(x) lambda^x*exp(-lambda)/factorial(x)) 
+  geom_histogram(aes(data$nBugs,after_stat(density)),bins = 20,color="black",alpha=0.4, fill="#dde542")+
+  geom_function(fun = function(x) lambda^x*exp(-lambda)/factorial(x))+
+  theme_minimal() +
+  labs(title = "Data and poisson distribution",
+       subtitle = "Comparing the distribution of number of bugs and the poisson distribution") +
+  xlab("Count of y") +
+  ylab("Pr(y<Y)")
 ```
 
-b\)
+The data does NOT follow a Poisson distribution.
+
+b\) We generate the data and added on top of the previous one
+
+```{r}
+df <- data.frame(VNeg1=rnbinom(500,mu = lambda,size=1),
+                 VNeg2=rnbinom(500,mu = lambda,size=3),
+                 VNeg3=rnbinom(500,mu = lambda,size=100) )
+ggplot() + 
+  geom_function(fun = function(x) lambda^x*exp(-lambda)/factorial(x), color = "#fc1b00", linewidth = 1.0 )+ 
+  geom_density(aes(df$VNeg1), color = "#FF9E0D", linewidth = 1.0) +
+  geom_density(aes(df$VNeg2), color = "#1BE2DC", linewidth = 1.0) +
+  geom_density(aes(df$VNeg3), color = "#09E920", linewidth = 1.0) +
+  geom_histogram(aes(data$nBugs,after_stat(density)),bins = 20,color="black",alpha=0.4, fill="#dde542")+
+  theme_minimal() +
+  labs(title = "Data, poisson and negative binomial distributions",
+       subtitle = "Comparing the distribution of number of bugs and 4 theoretical curves") +
+  xlab("Count of y") +
+  ylab("Pr(y<Y)")
+```
+
+The curve that follows the distribution of the data better is the blue line (r=3), and the curve that's more similar to the poisson model is the green line (r=100) because bigger r's approximates to it?
 
 ## Part 3
 
