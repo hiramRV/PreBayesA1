@@ -73,37 +73,54 @@ ggplot() +
 #Generate the data
 df <- data.frame(VNeg1=rnbinom(500,mu = lambda,size=1),
                  VNeg2=rnbinom(500,mu = lambda,size=3),
-                 VNeg3=rnbinom(500,mu = lambda,size=100) )
+                 VNeg3=rnbinom(500,mu = lambda,size=100),
+                 Pois=rpois(500,lambda = lambda))
+## Final Plot
+colors <- c("Poisson" = "#fc1b00","BNr1" = "#FF9E0D", "BNr3" = "#1BE2DC", "BNr100"="#09E920")
+
+ggplot() + 
+  geom_density(aes(df$Pois, color = "Poisson"), linewidth = 1.0 )+ 
+  geom_density(aes(df$VNeg1, color = "BNr1"), linewidth = 1.0 ) +
+  geom_density(aes(df$VNeg2, color = "BNr3"), linewidth = 1.0) +
+  geom_density(aes(df$VNeg3, color = "BNr100"), linewidth = 1.0) +
+  geom_histogram(aes(data_p2$nBugs,after_stat(density)),bins = 20,color="black",alpha=0.4, fill="#dde542")+
+  theme_minimal() +
+  labs(title = "Data, poisson and negative binomial distributions",
+       subtitle = "Comparing the distribution of number of bugs and 4 theoretical curves",
+       color = "Legend") +
+  xlab("Count of y") +
+  ylab("Pr(y<Y)")+scale_color_manual(values = colors,labels = c("BNr1"="NB r=1","BNr100"="NB r=100", "BNr3"="NB r=3","Poisson"="Poisson" ))
+
+####------
 #First try
 df %>% pivot_longer(everything()) %>%
   ggplot(aes(x=value,color=name))+
   geom_density(linewidth = 1.2)
 
-ggplot() +
-  geom_density(aes(df$VNeg1), color = "#FF9E0D", linewidth = 1.0) +
-  geom_density(aes(df$VNeg2), color = "#1BE2DC", linewidth = 1.0) +
-  geom_density(aes(df$VNeg3), color = "#09E920", linewidth = 1.0) +
-  geom_histogram(aes(data_p2$nBugs,after_stat(density)),bins = 20,color="black",alpha=0.4, fill="#dde542" )+
-  theme_minimal() +
-  labs(title = "Data and Negative Binomial",
-       subtitle = "Comparing the distribution of number of bugs and 3 theoretical curves") +
-  xlab("Count of y") +
-  ylab("Pr(y<Y)") +
-  theme(legend.position="right")
+# Extra. Example with tibble
+theo_data <- c(seq(from = 0, to = 20, by = .01))
+dist_theo1 <- tibble(theo_data, dnbinom(2001,mu = lambda,size=1) ) %>% rename(X = 1, Y = 2) %>% mutate(dist = "Beta = 1")
+dist_theo2 <- tibble(theo_data, dnbinom(2001,mu = lambda,size=3)) %>% rename(X = 1, Y = 2) %>% mutate(dist = "Beta = 2")
+dist_theo3 <- tibble(theo_data, dnbinom(2001,mu = lambda,size=100)) %>% rename(X = 1, Y = 2) %>% mutate(dist = "Beta = 3")
 
-## Final Plot
-ggplot() + 
-  geom_function(fun = function(x) lambda^x*exp(-lambda)/factorial(x), color = "#fc1b00", linewidth = 1.0 )+ 
-  geom_density(aes(df$VNeg1), color = "#FF9E0D", linewidth = 1.0) +
-  geom_density(aes(df$VNeg2), color = "#1BE2DC", linewidth = 1.0) +
-  geom_density(aes(df$VNeg3), color = "#09E920", linewidth = 1.0) +
-  geom_histogram(aes(data_p2$nBugs,after_stat(density)),bins = 20,color="black",alpha=0.4, fill="#dde542")+
-  theme_minimal() +
-  labs(title = "Data, poisson and negative binomial distributions",
-       subtitle = "Comparing the distribution of number of bugs and 4 theoretical curves") +
-  xlab("Count of y") +
-  ylab("Pr(y<Y)")
+dists <- dist_theo1 %>%
+  rbind(., dist_theo2) %>%
+  rbind(., dist_theo3) %>%
+  mutate(dist = factor(dist, levels = c("Beta = 1", "Beta = 2", "Beta = 3")))
 
-####------
-# Part 3
+
+col1 <- "#FF9E0D"
+col2 <- "#1BE2DC"
+col3 <- "#09E920"
+
+dists %>%
+  ggplot() +
+  geom_line(aes(X, Y, color = dist, group = dist)) +
+  scale_color_manual(values = c(col1, col2, col3)) +
+  theme_minimal() +
+  labs(title = "Histogram of the distribution",
+       subtitle = "Comparing theoretical distribution with randomly generated data",
+       color = "Theoretical Distribution") +
+  xlab("Count of X") +
+  ylab("X")
 

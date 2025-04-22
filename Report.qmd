@@ -134,18 +134,23 @@ b\) We generate the data and added on top of the previous one
 ```{r}
 df <- data.frame(VNeg1=rnbinom(500,mu = lambda,size=1),
                  VNeg2=rnbinom(500,mu = lambda,size=3),
-                 VNeg3=rnbinom(500,mu = lambda,size=100) )
+                 VNeg3=rnbinom(500,mu = lambda,size=100),
+                 Pois=rpois(500,lambda = lambda))
+colors <- c("Poisson" = "#fc1b00","BNr1" = "#FF9E0D", "BNr3" = "#1BE2DC", "BNr100"="#09E920")
+
 ggplot() + 
-  geom_function(fun = function(x) lambda^x*exp(-lambda)/factorial(x), color = "#fc1b00", linewidth = 1.0 )+ 
-  geom_density(aes(df$VNeg1), color = "#FF9E0D", linewidth = 1.0) +
-  geom_density(aes(df$VNeg2), color = "#1BE2DC", linewidth = 1.0) +
-  geom_density(aes(df$VNeg3), color = "#09E920", linewidth = 1.0) +
+  geom_density(aes(df$Pois, color = "Poisson"), linewidth = 1.0 )+ 
+  geom_density(aes(df$VNeg1, color = "BNr1"), linewidth = 1.0 ) +
+  geom_density(aes(df$VNeg2, color = "BNr3"), linewidth = 1.0) +
+  geom_density(aes(df$VNeg3, color = "BNr100"), linewidth = 1.0) +
   geom_histogram(aes(data$nBugs,after_stat(density)),bins = 20,color="black",alpha=0.4, fill="#dde542")+
   theme_minimal() +
   labs(title = "Data, poisson and negative binomial distributions",
-       subtitle = "Comparing the distribution of number of bugs and 4 theoretical curves") +
+       subtitle = "Comparing the distribution of number of bugs and 4 theoretical curves",
+       color = "Legend") +
   xlab("Count of y") +
-  ylab("Pr(y<Y)")
+  ylab("Pr(y<Y)")+scale_color_manual(values = colors,labels = c("BNr1"="NB r=1","BNr100"="NB r=100", "BNr3"="NB r=3","Poisson"="Poisson" ))
+
 ```
 
 The curve that follows the distribution of the data better is the blue line (r=3), and the curve that's more similar to the poisson model is the green line (r=100) because bigger r's approximates to it?
