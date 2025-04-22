@@ -124,7 +124,7 @@ ggplot() +
   labs(title = "Data and poisson distribution",
        subtitle = "Comparing the distribution of number of bugs and the poisson distribution") +
   xlab("Count of y") +
-  ylab("Pr(y<Y)")
+  ylab("Pr(y<Y)")+xlim(-2,37)
 ```
 
 The data does NOT follow a Poisson distribution.
@@ -132,23 +132,23 @@ The data does NOT follow a Poisson distribution.
 b\) We generate the data and added on top of the previous one
 
 ```{r}
-df <- data.frame(VNeg1=rnbinom(500,mu = lambda,size=1),
-                 VNeg2=rnbinom(500,mu = lambda,size=3),
-                 VNeg3=rnbinom(500,mu = lambda,size=100),
-                 Pois=rpois(500,lambda = lambda))
+df <- data.frame(VNeg1=rnbinom(10000,mu = lambda,size=1),
+                 VNeg2=rnbinom(10000,mu = lambda,size=3),
+                 VNeg3=rnbinom(10000,mu = lambda,size=100),
+                 Pois=rpois(10000,lambda = lambda))
 colors <- c("Poisson" = "#fc1b00","BNr1" = "#FF9E0D", "BNr3" = "#1BE2DC", "BNr100"="#09E920")
 
 ggplot() + 
-  geom_density(aes(df$Pois, color = "Poisson"), linewidth = 1.0 )+ 
-  geom_density(aes(df$VNeg1, color = "BNr1"), linewidth = 1.0 ) +
-  geom_density(aes(df$VNeg2, color = "BNr3"), linewidth = 1.0) +
-  geom_density(aes(df$VNeg3, color = "BNr100"), linewidth = 1.0) +
+  geom_density(aes(df$Pois, color = "Poisson"), linewidth = 1.0, bw = 1.0)+ 
+  geom_density(aes(df$VNeg1, color = "BNr1"), linewidth = 1.0, bw = 1.0) +
+  geom_density(aes(df$VNeg2, color = "BNr3"), linewidth = 1.0,bw = 1.0) +
+  geom_density(aes(df$VNeg3, color = "BNr100"), linewidth = 1.0,bw = 1.0) +
   geom_histogram(aes(data$nBugs,after_stat(density)),bins = 20,color="black",alpha=0.4, fill="#dde542")+
   theme_minimal() +
   labs(title = "Data, poisson and negative binomial distributions",
        subtitle = "Comparing the distribution of number of bugs and 4 theoretical curves",
        color = "Legend") +
-  xlab("Count of y") +
+  xlab("Count of y")+xlim(-1,40)+ylim(0,0.18)+
   ylab("Pr(y<Y)")+scale_color_manual(values = colors,labels = c("BNr1"="NB r=1","BNr100"="NB r=100", "BNr3"="NB r=3","Poisson"="Poisson" ))
 
 ```
@@ -159,7 +159,7 @@ The curve that follows the distribution of the data better is the blue line (r=3
 
 ### Problem 3a
 
-***Let $X \sim \mathrm{Normal}(\mu = 0, \sigma^2 = 1)$. We are now interested in the distribution of $Y=\exp(X)$. Obtain the distribution for $Y$ by simulating 10000 draws. Plot a histogram with 100 bins.***
+***Let*** $X \sim \mathrm{Normal}(\mu = 0, \sigma^2 = 1)$. We are now interested in the distribution of $Y=\exp(X)$. Obtain the distribution for $Y$ by simulating 10000 draws. Plot a histogram with 100 bins.
 
 ```{r}
 #| echo: false
@@ -175,12 +175,9 @@ hist(Y, breaks = 100, freq = F, ylim = c(0, 0.65), xlim = c(0, 10),
      main = "Distribution of Y in simulated data, zoomed in", col = "lightseagreen")
 ```
 
-
-
 ### Problem 3b
 
-
-***Use the method of transformation to show that the probability density for $Y$ is given by***
+***Use the method of transformation to show that the probability density for*** $Y$ is given by
 
 $$
 f(x)=\frac{1}{\sqrt{2\pi}x}\exp\Big(-\frac{1}{2}(\log(x)-\mu)^2\Big)
@@ -188,23 +185,19 @@ $$
 
 ***Overlay a plot of this density in the histogram from Problem 3a).***
 
-We know that for any function $X = f(x)$ and $Y = g(X)$, where $g(X)$ is an invertible, differentiable and monotonically increasing or decreasing variable, the probability density function of $Y$ is given by
-$$
+We know that for any function $X = f(x)$ and $Y = g(X)$, where $g(X)$ is an invertible, differentiable and monotonically increasing or decreasing variable, the probability density function of $Y$ is given by $$
 f_Y(y) = f_X\left(g^{-1}(y)\right) \left| \frac{d}{dy} g^{-1}(y) \right|,
-$$
-where $g^{-1}(y)$ is the inverse function of $Y$.
+$$ where $g^{-1}(y)$ is the inverse function of $Y$.
 
-In our case where $X \sim \mathrm{Normal}(\mu = 0, \sigma^2 = 1)$, the probability density function of X is given by
-$$
+In our case where $X \sim \mathrm{Normal}(\mu = 0, \sigma^2 = 1)$, the probability density function of X is given by $$
 f_X(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left( -\frac{1}{2\sigma^2}(x - \mu)^2 \right) = \frac{1}{\sqrt{2\pi}} \exp\left( -\frac{x^2}{2} \right).
-$$
-$Y$ is a function of $X$, $Y=\exp(X)$, and has the inverse function $X = log(Y)$. The derivative of the inverse function is given by
+$$ $Y$ is a function of $X$, $Y=\exp(X)$, and has the inverse function $X = log(Y)$. The derivative of the inverse function is given by
 
 $$
 \frac{d}{dy} g^{-1}(y) = \frac{d}{dy} \log(y) = \frac{1}{y}.
 $$
 
-Replacing into the equation for the PDF of Y gives: 
+Replacing into the equation for the PDF of Y gives:
 
 $$
 f_Y(y) = f_X\left(g^{-1}(y)\right) \left| \frac{d}{dy} g^{-1}(y) \right| = f_X(\log(y)) \cdot \frac{1}{y} = \frac{1}{y\sqrt{2\pi}} \exp\left( -\frac{\log(y)^2}{2} \right)
@@ -228,7 +221,7 @@ curve(y_pdf(x), from = min(Y), to = 10, col = "red", lwd = 2, add = TRUE)
 
 ### Problem 3c
 
-***Use Monte Carlo simulation with $m=10000$ random draws to estimate $\mathrm{E}(Y)$ where $Y=\exp(X)$ and $X \sim \mathrm{Normal}(\mu = 0, \sigma^2 = 1)$. Check the convergence of the estimate by plotting the sequential Monte Carlo estimates for increasing Monte Carlo sample sizes of $10,20,30,\ldots,9900, 10000$. Does the estimate seem to converge (settle down) to the true expectation, which happens to be $\mathrm{E}(Y)=\exp(\frac{1}{2})$?***
+***Use Monte Carlo simulation with*** $m=10000$ random draws to estimate $\mathrm{E}(Y)$ where $Y=\exp(X)$ and $X \sim \mathrm{Normal}(\mu = 0, \sigma^2 = 1)$. Check the convergence of the estimate by plotting the sequential Monte Carlo estimates for increasing Monte Carlo sample sizes of $10,20,30,\ldots,9900, 10000$. Does the estimate seem to converge (settle down) to the true expectation, which happens to be $\mathrm{E}(Y)=\exp(\frac{1}{2})$?
 
 ```{r}
 #| echo: false

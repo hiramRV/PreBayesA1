@@ -50,7 +50,8 @@ ggplot() +
   labs(title = "Data and poisson distribution",
        subtitle = "Comparing the distribution of number of bugs and the poisson distribution") +
   xlab("Count of y") +
-  ylab("Pr(y<Y)")
+  ylab("Pr(y<Y)")+
+  xlim(0,35)
 
 #Extra. Which is the best value of bins? 
 #Maybe try a sub plot
@@ -79,18 +80,17 @@ df <- data.frame(VNeg1=rnbinom(500,mu = lambda,size=1),
 colors <- c("Poisson" = "#fc1b00","BNr1" = "#FF9E0D", "BNr3" = "#1BE2DC", "BNr100"="#09E920")
 
 ggplot() + 
-  geom_density(aes(df$Pois, color = "Poisson"), linewidth = 1.0 )+ 
-  geom_density(aes(df$VNeg1, color = "BNr1"), linewidth = 1.0 ) +
-  geom_density(aes(df$VNeg2, color = "BNr3"), linewidth = 1.0) +
-  geom_density(aes(df$VNeg3, color = "BNr100"), linewidth = 1.0) +
-  geom_histogram(aes(data_p2$nBugs,after_stat(density)),bins = 20,color="black",alpha=0.4, fill="#dde542")+
+  geom_density(aes(df$Pois, color = "Poisson"), linewidth = 1.0, bw = 1.0)+ 
+  geom_density(aes(df$VNeg1, color = "BNr1"), linewidth = 1.0, bw = 1.0) +
+  geom_density(aes(df$VNeg2, color = "BNr3"), linewidth = 1.0,bw = 1.0) +
+  geom_density(aes(df$VNeg3, color = "BNr100"), linewidth = 1.0,bw = 1.0) +
+  geom_histogram(aes(data$nBugs,after_stat(density)),bins = 20,color="black",alpha=0.4, fill="#dde542")+
   theme_minimal() +
   labs(title = "Data, poisson and negative binomial distributions",
        subtitle = "Comparing the distribution of number of bugs and 4 theoretical curves",
        color = "Legend") +
-  xlab("Count of y") +
+  xlab("Count of y")+xlim(-1,40)+ylim(0,0.18)+
   ylab("Pr(y<Y)")+scale_color_manual(values = colors,labels = c("BNr1"="NB r=1","BNr100"="NB r=100", "BNr3"="NB r=3","Poisson"="Poisson" ))
-
 ####------
 #First try
 df %>% pivot_longer(everything()) %>%
