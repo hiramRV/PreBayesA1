@@ -157,17 +157,94 @@ The curve that follows the distribution of the data better is the blue line (r=3
 
 ## Part 3
 
-## Example Code
+### Problem 3a
 
-```{r}
-1 + 1
-```
-
-You can add options to executable code like this
+***Let $X \sim \mathrm{Normal}(\mu = 0, \sigma^2 = 1)$. We are now interested in the distribution of $Y=\exp(X)$. Obtain the distribution for $Y$ by simulating 10000 draws. Plot a histogram with 100 bins.***
 
 ```{r}
 #| echo: false
-2 * 2
+
+set.seed(123)
+X <- rnorm(10000, mean = 0, sd = 1)
+Y <- exp(X)
+
+hist(Y, breaks = 100, freq = F, ylim = c(0, 0.65),
+     main = "Distribution of Y in simulated data", col = "lightseagreen")
+
+hist(Y, breaks = 100, freq = F, ylim = c(0, 0.65), xlim = c(0, 10),
+     main = "Distribution of Y in simulated data, zoomed in", col = "lightseagreen")
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+
+
+### Problem 3b
+
+
+***Use the method of transformation to show that the probability density for $Y$ is given by***
+
+$$
+f(x)=\frac{1}{\sqrt{2\pi}x}\exp\Big(-\frac{1}{2}(\log(x)-\mu)^2\Big)
+$$
+
+***Overlay a plot of this density in the histogram from Problem 3a).***
+
+We know that for any function $X = f(x)$ and $Y = g(X)$, where $g(X)$ is an invertible, differentiable and monotonically increasing or decreasing variable, the probability density function of $Y$ is given by
+$$
+f_Y(y) = f_X\left(g^{-1}(y)\right) \left| \frac{d}{dy} g^{-1}(y) \right|,
+$$
+where $g^{-1}(y)$ is the inverse function of $Y$.
+
+In our case where $X \sim \mathrm{Normal}(\mu = 0, \sigma^2 = 1)$, the probability density function of X is given by
+$$
+f_X(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left( -\frac{1}{2\sigma^2}(x - \mu)^2 \right) = \frac{1}{\sqrt{2\pi}} \exp\left( -\frac{x^2}{2} \right).
+$$
+$Y$ is a function of $X$, $Y=\exp(X)$, and has the inverse function $X = log(Y)$. The derivative of the inverse function is given by
+
+$$
+\frac{d}{dy} g^{-1}(y) = \frac{d}{dy} \log(y) = \frac{1}{y}.
+$$
+
+Replacing into the equation for the PDF of Y gives: 
+
+$$
+f_Y(y) = f_X\left(g^{-1}(y)\right) \left| \frac{d}{dy} g^{-1}(y) \right| = f_X(\log(y)) \cdot \frac{1}{y} = \frac{1}{y\sqrt{2\pi}} \exp\left( -\frac{\log(y)^2}{2} \right)
+$$
+
+Below are two versions of the histograms from problem 3a with overlaid theoretical probability distributions; the first one is in full scale and with 100 bins, and the second one is zoomed in and has more bins to better show the distribution of the simulated data.
+
+```{r}
+#| echo: false
+
+y_pdf <- function(y) {1 / (y * sqrt(2 * pi)) * exp(-0.5 * (log(y))^2)}
+
+hist(Y, breaks = 100, freq = F, ylim = c(0, 0.65),
+     main = "Simulated data and theoretical PDF of Y", col = "lightseagreen")
+curve(y_pdf(x), from = min(Y), to = max(Y), col = "red", lwd = 2, add = TRUE)
+
+hist(Y, breaks = 500, freq = F, ylim = c(0, 0.65), xlim = c(0, 10),
+     main = "Simulated data and theoretical PDF of Y, zoomed in", col = "lightseagreen")
+curve(y_pdf(x), from = min(Y), to = 10, col = "red", lwd = 2, add = TRUE)
+```
+
+### Problem 3c
+
+***Use Monte Carlo simulation with $m=10000$ random draws to estimate $\mathrm{E}(Y)$ where $Y=\exp(X)$ and $X \sim \mathrm{Normal}(\mu = 0, \sigma^2 = 1)$. Check the convergence of the estimate by plotting the sequential Monte Carlo estimates for increasing Monte Carlo sample sizes of $10,20,30,\ldots,9900, 10000$. Does the estimate seem to converge (settle down) to the true expectation, which happens to be $\mathrm{E}(Y)=\exp(\frac{1}{2})$?***
+
+```{r}
+#| echo: false
+
+set.seed(123)
+
+Y_mean   <- exp(0.5)
+mc_means <- sapply(seq(10, 10000, by = 10), function(n) mean(Y[1:n]))
+
+plot(seq(10, 10000, by = 10), mc_means, type = "l", col = "lightseagreen",
+     main = "Monte Carlo Convergence of E(Y)",
+     xlab = "Sample Size", ylab = "Estimated Expected Value",
+     ylim = range(c(mc_means, Y_mean)))
+abline(h = Y_mean, col = "black", lwd = 2, lty = 2)
+legend("topright", col = c("lightseagreen", "black"), lwd = 2, lty = c(1, 2),
+       legend = c("Monte Carlo Expected Value Estimate", "True Expected Value exp(0.5) ~ 1.6487"))
+```
+
+Monte Carlo Simulation relies on repeated random sampling to obtain some estimated value, in this case the expected value of $Y=\exp(X)$ where $X \sim \mathrm{Normal}(\mu = 0, \sigma^2 = 1)$. The plot above shows how the average mean value of $Y$ converges to the true mean (which is approximately 1.6587) as sample size increases. There are 1000 data points in the plot since each data point includes 10 more observations and we have generated random data with 10000 observations in total. We note that after about the 200th data point, which averages 2000 observations, the Monte Carlo estimate of the expected value do not fluctuate as much as it did for smaller sample sizes, and pretty much converges to the true mean.
