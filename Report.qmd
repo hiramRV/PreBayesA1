@@ -129,7 +129,7 @@ plot1 <- ggplot() +
   labs(title = "Data and poisson distribution",
        subtitle = "Comparing the distribution of number of bugs and the poisson distribution with n=9") +
   xlab("Count of y") +
-  ylab("Pr(y<Y)")+
+  ylab("Density")+
   xlim(0,35)
 
 plot2 <- ggplot() + 
@@ -139,7 +139,7 @@ plot2 <- ggplot() +
   labs(
        subtitle = "Comparing the distribution of number of bugs and the poisson distribution with n=18") +
   xlab("Count of y") +
-  ylab("Pr(y<Y)")+
+  ylab("Density")+
   xlim(0,35)
 
 plot3 <- ggplot() + 
@@ -149,7 +149,7 @@ plot3 <- ggplot() +
   labs(
        subtitle = "Comparing the distribution of number of bugs and the poisson distribution with n=27") +
   xlab("Count of y") +
-  ylab("Pr(y<Y)")+
+  ylab("Density)")+
   xlim(0,35)
 
 plot1 / plot2 / plot3
@@ -178,7 +178,7 @@ ggplot() +
        subtitle = "Comparing the distribution of number of bugs and 4 theoretical curves",
        color = "Legend") +
   xlab("Count of y")+xlim(-1,40)+ylim(0,0.18)+
-  ylab("Pr(y<Y)")+scale_color_manual(values = colors,labels = c("BNr1"="NB r=1","BNr100"="NB r=100", "BNr3"="NB r=3","Poisson"="Poisson" ))
+  ylab("Density")+scale_color_manual(values = colors,labels = c("BNr1"="NB r=1","BNr100"="NB r=100", "BNr3"="NB r=3","Poisson"="Poisson" ))
 
 ```
 
