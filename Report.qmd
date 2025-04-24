@@ -11,7 +11,7 @@ Import of the libraries and data...
 
 ```{r,warning=FALSE,message=FALSE}
 #| echo: false
-
+library(patchwork)
 library(pacman)
 p_load(readxl, tidyverse, ggplot2, janitor, e1071, scales, ggridges)
 
@@ -111,27 +111,56 @@ ggplot() +
 
 ## Part 2
 
-a\) After reading the bugs data and calculating lambda we try to fit an EXP distribution:
+a\) After reading the data set, we select the bugs column and calculate the expected value (Lambda), with this, we attempt to fit a Poisson regression to the data with different bin sizes. As for the number of bins, the rule ***sqrt**(number of observations)* was used as a starting point.
 
 ```{r}
-y = data$nBugs # number of bugs, a vector with n = 91 observations
+y = data$nBugs 
 lambda=mean(y)
+lambda
 
-ggplot() + 
-  geom_histogram(aes(data$nBugs,after_stat(density)),bins = 20,color="black",alpha=0.4, fill="#dde542")+
+```
+
+```{r, warning=FALSE,message=FALSE}
+#| echo: false
+plot1 <- ggplot() + 
+  geom_histogram(aes(data$nBugs,after_stat(density)),bins = 9,color="black",alpha=0.4, fill="#dde542")+
   geom_function(fun = function(x) lambda^x*exp(-lambda)/factorial(x))+
   theme_minimal() +
   labs(title = "Data and poisson distribution",
-       subtitle = "Comparing the distribution of number of bugs and the poisson distribution") +
+       subtitle = "Comparing the distribution of number of bugs and the poisson distribution with n=9") +
   xlab("Count of y") +
-  ylab("Pr(y<Y)")+xlim(-2,37)
+  ylab("Pr(y<Y)")+
+  xlim(0,35)
+
+plot2 <- ggplot() + 
+  geom_histogram(aes(data$nBugs,after_stat(density)),bins = 18,color="black",alpha=0.4, fill="#dde542")+
+  geom_function(fun = function(x) lambda^x*exp(-lambda)/factorial(x))+
+  theme_minimal() +
+  labs(
+       subtitle = "Comparing the distribution of number of bugs and the poisson distribution with n=18") +
+  xlab("Count of y") +
+  ylab("Pr(y<Y)")+
+  xlim(0,35)
+
+plot3 <- ggplot() + 
+  geom_histogram(aes(data$nBugs,after_stat(density)),bins = 27,color="black",alpha=0.4, fill="#dde542")+
+  geom_function(fun = function(x) lambda^x*exp(-lambda)/factorial(x))+
+  theme_minimal() +
+  labs(
+       subtitle = "Comparing the distribution of number of bugs and the poisson distribution with n=27") +
+  xlab("Count of y") +
+  ylab("Pr(y<Y)")+
+  xlim(0,35)
+
+plot1 / plot2 / plot3
 ```
 
-The data does NOT follow a Poisson distribution.
+It can be observed that the distribution does not follow the poisson distribution in any case. In the first two cases it resembles more a exponential distribution and in the last one it appears as it has two modes.
 
-b\) We generate the data and added on top of the previous one
+b\) For the second task, we generate distribution curves for a Negative Binomial distribution and compare it with the previous result.
 
-```{r}
+```{r, warning=FALSE,message=FALSE}
+#| echo: false
 df <- data.frame(VNeg1=rnbinom(10000,mu = lambda,size=1),
                  VNeg2=rnbinom(10000,mu = lambda,size=3),
                  VNeg3=rnbinom(10000,mu = lambda,size=100),
@@ -143,7 +172,7 @@ ggplot() +
   geom_density(aes(df$VNeg1, color = "BNr1"), linewidth = 1.0, bw = 1.0) +
   geom_density(aes(df$VNeg2, color = "BNr3"), linewidth = 1.0,bw = 1.0) +
   geom_density(aes(df$VNeg3, color = "BNr100"), linewidth = 1.0,bw = 1.0) +
-  geom_histogram(aes(data$nBugs,after_stat(density)),bins = 20,color="black",alpha=0.4, fill="#dde542")+
+  geom_histogram(aes(data$nBugs,after_stat(density)),bins = 18,color="black",alpha=0.4, fill="#dde542")+
   theme_minimal() +
   labs(title = "Data, poisson and negative binomial distributions",
        subtitle = "Comparing the distribution of number of bugs and 4 theoretical curves",
@@ -153,7 +182,7 @@ ggplot() +
 
 ```
 
-The curve that follows the distribution of the data better is the blue line (r=3), and the curve that's more similar to the poisson model is the green line (r=100) because bigger r's approximates to it?
+We can observe that, now, the curve that follows the distribution of the data better is the blue line (r=3), and the curve that's more similar to the poisson model is the green line (r=100). This is because...
 
 ## Part 3
 

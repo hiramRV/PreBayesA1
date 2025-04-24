@@ -7,6 +7,7 @@
 library(ggplot2)
 library(tidyverse)
 theme_set(theme_minimal()) 
+library(patchwork)
 
 ####-----
 # Part 1
@@ -42,17 +43,40 @@ View(data)
 # 2a).
 y = data$nBugs # number of bugs, a vector with n = 91 observations
 lambda=mean(y)
+
+bin_count = int(np.ceil(np.log2(len(data$nBugs))) + 1)
 ## Simple plot
-ggplot() + 
-  geom_histogram(aes(data_p2$nBugs,after_stat(density)),bins = 20,color="black",alpha=0.4, fill="#dde542")+
+plot1 <- ggplot() + 
+  geom_histogram(aes(data_p2$nBugs,after_stat(density)),bins = 9,color="black",alpha=0.4, fill="#dde542")+
   geom_function(fun = function(x) lambda^x*exp(-lambda)/factorial(x))+
   theme_minimal() +
   labs(title = "Data and poisson distribution",
-       subtitle = "Comparing the distribution of number of bugs and the poisson distribution") +
+       subtitle = "Comparing the distribution of number of bugs and the poisson distribution with n=9") +
   xlab("Count of y") +
   ylab("Pr(y<Y)")+
   xlim(0,35)
 
+plot2 <- ggplot() + 
+  geom_histogram(aes(data_p2$nBugs,after_stat(density)),bins = 18,color="black",alpha=0.4, fill="#dde542")+
+  geom_function(fun = function(x) lambda^x*exp(-lambda)/factorial(x))+
+  theme_minimal() +
+  labs(
+       subtitle = "Comparing the distribution of number of bugs and the poisson distribution with n=14") +
+  xlab("Count of y") +
+  ylab("Pr(y<Y)")+
+  xlim(0,35)
+
+plot3 <- ggplot() + 
+  geom_histogram(aes(data_p2$nBugs,after_stat(density)),bins = 27,color="black",alpha=0.4, fill="#dde542")+
+  geom_function(fun = function(x) lambda^x*exp(-lambda)/factorial(x))+
+  theme_minimal() +
+  labs(
+       subtitle = "Comparing the distribution of number of bugs and the poisson distribution with n=21") +
+  xlab("Count of y") +
+  ylab("Pr(y<Y)")+
+  xlim(0,35)
+
+plot1 / plot2 / plot3
 #Extra. Which is the best value of bins? 
 #Maybe try a sub plot
 ggplot() + 
@@ -84,7 +108,7 @@ ggplot() +
   geom_density(aes(df$VNeg1, color = "BNr1"), linewidth = 1.0, bw = 1.0) +
   geom_density(aes(df$VNeg2, color = "BNr3"), linewidth = 1.0,bw = 1.0) +
   geom_density(aes(df$VNeg3, color = "BNr100"), linewidth = 1.0,bw = 1.0) +
-  geom_histogram(aes(data$nBugs,after_stat(density)),bins = 20,color="black",alpha=0.4, fill="#dde542")+
+  geom_histogram(aes(data$nBugs,after_stat(density)),bins = 14,color="black",alpha=0.4, fill="#dde542")+
   theme_minimal() +
   labs(title = "Data, poisson and negative binomial distributions",
        subtitle = "Comparing the distribution of number of bugs and 4 theoretical curves",
