@@ -210,7 +210,7 @@ plot3 <- ggplot() +
 plot1 / plot2 / plot3
 ```
 
-It can be observed that the distribution does not follow the poisson distribution in any case. In the first two cases it resembles more a exponential distribution and in the last one it appears as it has two modes.
+The distribution does not seem to follow the Poisson distribution, based on how the histograms look compared to the theoretical probability distribution.
 
 ### Problem 2b
 
