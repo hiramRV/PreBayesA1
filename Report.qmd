@@ -7,7 +7,7 @@ editor: visual
 
 ## Assignment 1
 
-Import of the libraries and data...
+Import of the libraries and data
 
 ```{r,warning=FALSE,message=FALSE}
 #| echo: false
@@ -27,7 +27,7 @@ data = read.csv("https://github.com/StatisticsSU/STM/raw/main/assignment/bugs.cs
 
 ## Part 1
 
-### Problem 1A:
+### Problem 1a
 
 ```{r, warning=FALSE,message=FALSE}
 
@@ -35,12 +35,11 @@ dist <- rexp(10000, 1/2)
 
 mean(dist)
 
-
 ```
 
-The value for the mean given that $$ \lambda = 2 $$ or $$ \beta = 1/2 $$ is $$2$$. When drawing a sample of 10,000 we obtain $$\bar{x} = 2.013022$$. Therefore, we can conclude that R is using the correct rate of parameterization.
+The true value for the mean given that $$ \lambda = 2 $$ or $$ \beta = 1/2 $$ is $$2$$ When drawing a sample of 10,000 we obtain $$\bar{x} = 2.013022$$ Therefore, we conclude that R is using the correct rate of parameterization.
 
-### Problem 1B:
+### Problem 1b
 
 ```{r, warning=FALSE,message=FALSE}
 
@@ -52,15 +51,15 @@ ggplot() +
   geom_histogram(aes(dist$X, after_stat(density)), bins = 30, fill = "steelblue", color = "black") +
   geom_line(aes(dist_theo$X, dist_theo$Y)) +
   theme_minimal() +
-  labs(title = "Histogram of the distribution",
-       subtitle = "Comparing theoretical distribution with randomly generated data") +
-  xlab("Count of X") +
-  ylab("X") 
+  labs(title = "Histogram of exponential distribution with beta = 2",
+       subtitle = "Comparing theoretical pdf with the distribution of randomly generated data") +
+  xlab("X") +
+  ylab("Probability") 
 
 
 ```
 
-### Problem 1C:
+### Problem 1c
 
 ```{r, warning=FALSE,message=FALSE}
 
@@ -75,21 +74,21 @@ dist_theo3 <- tibble(theo_data, dexp(theo_data, rate = 1/3)) %>% rename(X = 1, Y
 
 ggplot() +
   geom_histogram(aes(dist$X, after_stat(density)), bins = 30, fill = "steelblue", color = "black") +
-  geom_line(aes(dist_theo1$X, dist_theo1$Y), color = "#FF9E0D", linetype = "dotdash") +
+  geom_line(aes(dist_theo1$X, dist_theo1$Y), color = "#FF9E0D") +
   geom_line(aes(dist_theo2$X, dist_theo2$Y), color = "#1BE2DC") +
-  geom_line(aes(dist_theo3$X, dist_theo3$Y), color = "#09E920", linetype = "dotdash") +
+  geom_line(aes(dist_theo3$X, dist_theo3$Y), color = "#09E920") +
   theme_minimal() +
-  labs(title = "Histogram of the distribution",
-       subtitle = "Comparing theoretical distribution with randomly generated data") +
-  xlab("Count of X") +
-  ylab("X") 
+  labs(title = "Histogram of exponential distribution with beta = 2",
+       subtitle = "Comparing theoretical pdf with the distribution of randomly generated data") +
+  xlab("X") +
+  ylab("Probability") 
 
 
 ```
 
-Of the three curves, it is clear that the one using $$ \beta = 1$$ (in orange) is the worse fit (as it underestimates the density of larger values and overestimates the density of smaller values). Of the two other curves using $$ \beta = 2 $$ (in blue, the actual theoretical distribution used to generate our sample) and $$ \beta = 3 $$ (in green) it is not readily obvious which one is the better fit. The distribution using $$ \beta = 3 $$ slightly overestimates large values and slightly underestimates small ones but $$ \beta = 2 $$ is also not a perfect fit.
+Out of the three curves, it is clear that the orange one using $$ \beta = 1$$ is the worse fit, as it underestimates the density of larger values and overestimates the density of smaller values. Out of the two other curves, using $$ \beta = 2 $$ for the blue one (which uses the same parameter value as when we generated a random sample) and $$ \beta = 3 $$ for the green one, it is not readily obvious which one is the better fit. The green pdf ($\beta = 3$) slightly overestimates large values and slightly underestimates small ones, but the blue pdf ($\beta = 2$) is also not a perfect fit.
 
-### Problem 1D:
+### Problem 1d
 
 ```{r, warning=FALSE,message=FALSE}
 
@@ -107,23 +106,20 @@ ggplot() +
   theme_minimal() +
   labs(title = "Cumulative distribution",
        subtitle = "Comparing theoretical cumulative distribution with randomly generated data") +
-  xlab("Count of X") +
-  ylab("X") 
+  xlab("X") +
+  ylab("Cumulative probability") 
 
 ```
 
-In this case it is far more obvious which theoretical CDF is the better fit. The one using $$ \beta = 2 $$ (in blue) is very closely aligned with the data while the the other two using $$ \beta = 1 $$ (in orange) and $$ \beta = 3 $$ (in green) are clearly different.
+In this case it is more obvious which theoretical CDF is the better fit. The blue one ($\beta = 2$) is very closely aligned with the data while the orange ($\beta = 1$) and green ($\beta = 3$) are clearly different.
 
-### Problem 1E:
+### Problem 1e
 
 ```{r, warning=FALSE,message=FALSE}
-obs_median <- median(dist$X)
-
-theo_median1 <- log(2)/1
-
-theo_median2 <- log(2)/(1/2)
-
-theo_median3 <- log(2)/(1/3)
+obs_median   <- median(dist$X)
+theo_median1 <- log(2)/1        # Theoretical median where lambda = 1
+theo_median2 <- log(2)/(1/2)    # Theoretical median where lambda = 1/2
+theo_median3 <- log(2)/(1/3)    # Theoretical median where lambda = 1/3
 
 print(obs_median)
 
@@ -135,11 +131,11 @@ print(theo_median3)
 
 ```
 
-A sample median is easily defined and obtained. One must simply order all observations by magnitude and select the one in the middle. Should there be an even number of observations, the two in the middle can be averaged to obtain it.
+To obtain a sample median, one must simply order all observations by magnitude and select the value in the middle. Should there be an even number of observations, the two values in the middle can be averaged to obtain it.
 
-For theoretical distributions we must do a little bit of math. In this case for the exponential distribution the median is defined as $$ med(x) = \frac{ln(2)}{\lambda} $$ in this case given that $$ \lambda = \frac{1}{\beta} $$ we obtain $$ \lambda = 1 $$, $$ \lambda = 1/2 $$ and $$ \lambda = 1/3 $$ for our three distributions. We then simply plug those values into the formula to obtain our results.
+For theoretical distributions we must do a little bit of math. In this case for the exponential distribution the median is defined as $$ median(x) = \frac{ln(2)}{\lambda} $$ and $$ \lambda = \frac{1}{\beta} $$ Above, we calculated the theoretical medians for $\lambda = 1$, $\lambda = 1/2$ and $\lambda = 1/3$ by simply plugging in those values into the formula to obtain our results.
 
-### Problem 1F:
+### Problem 1f
 
 ```{r, warning=FALSE,message=FALSE}
 
@@ -154,7 +150,7 @@ for (i in delta) {
 
 ```
 
-### Problem 1G:
+### Problem 1g
 
 ```{r, warning=FALSE,message=FALSE}
 
@@ -168,7 +164,9 @@ integrate(f = expon_fun, lower = 0, upper = Inf)
 
 ## Part 2
 
-a\) After reading the data set, we select the bugs column and calculate the expected value (Lambda), with this, we attempt to fit a Poisson regression to the data with different bin sizes. As for the number of bins, the rule ***sqrt**(number of observations)* was used as a starting point.
+### Problem 2a
+
+After reading the data set, we select the bugs column and calculate the expected value (Lambda), with this, we attempt to fit a Poisson regression to the data with different bin sizes. As for the number of bins, the rule ***sqrt**(number of observations)* was used as a starting point.
 
 ```{r}
 y = data$nBugs 
@@ -214,7 +212,9 @@ plot1 / plot2 / plot3
 
 It can be observed that the distribution does not follow the poisson distribution in any case. In the first two cases it resembles more a exponential distribution and in the last one it appears as it has two modes.
 
-b\) For the second task, we generate distribution curves for a Negative Binomial distribution and compare it with the previous result.
+### Problem 2b
+
+For the second task, we generate distribution curves for a Negative Binomial distribution and compare it with the previous result.
 
 ```{r, warning=FALSE,message=FALSE}
 #| echo: false
