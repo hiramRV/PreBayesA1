@@ -182,7 +182,7 @@ plot1 <- ggplot() +
   geom_function(fun = function(x) lambda^x*exp(-lambda)/factorial(x))+
   theme_minimal() +
   labs(title = "Data and poisson distribution",
-       subtitle = "Comparing the distribution of number of bugs and the poisson distribution with n = 9") +
+       subtitle = "Comparing the distribution of number of bugs and the Poisson distribution with n = 9") +
   xlab("y") +
   ylab("Density")+
   xlim(0,35)
@@ -192,7 +192,7 @@ plot2 <- ggplot() +
   geom_function(fun = function(x) lambda^x*exp(-lambda)/factorial(x))+
   theme_minimal() +
   labs(
-       subtitle = "Comparing the distribution of number of bugs and the poisson distribution with n = 18") +
+       subtitle = "Comparing the distribution of number of bugs and the Poisson distribution with n = 18") +
   xlab("y") +
   ylab("Density")+
   xlim(0,35)
@@ -202,7 +202,7 @@ plot3 <- ggplot() +
   geom_function(fun = function(x) lambda^x*exp(-lambda)/factorial(x))+
   theme_minimal() +
   labs(
-       subtitle = "Comparing the distribution of number of bugs and the poisson distribution with n = 27") +
+       subtitle = "Comparing the distribution of number of bugs and the Poisson distribution with n = 27") +
   xlab("y") +
   ylab("Density")+
   xlim(0,35)
