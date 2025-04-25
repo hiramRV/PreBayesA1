@@ -68,6 +68,30 @@ ggplot() +
   xlab("Count of X") +
   ylab("X") 
 
+### 1E ----
+median(dist$X)
+
+median(dist_theo1$X)
+
+median(dist_theo2$X)
+
+median(dist_theo3$X)
+
+### 1F ----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

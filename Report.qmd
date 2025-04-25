@@ -27,7 +27,7 @@ data = read.csv("https://github.com/StatisticsSU/STM/raw/main/assignment/bugs.cs
 
 ## Part 1
 
-1A:
+### Problem 1A:
 
 ```{r, warning=FALSE,message=FALSE}
 
@@ -38,7 +38,7 @@ mean(dist)
 
 ```
 
-1B:
+### Problem 1B:
 
 ```{r, warning=FALSE,message=FALSE}
 
@@ -58,7 +58,7 @@ ggplot() +
 
 ```
 
-1C:
+### Problem 1C:
 
 ```{r, warning=FALSE,message=FALSE}
 
@@ -85,7 +85,7 @@ ggplot() +
 
 ```
 
-1D:
+### Problem 1D:
 
 ```{r, warning=FALSE,message=FALSE}
 
@@ -106,7 +106,55 @@ ggplot() +
   xlab("Count of X") +
   ylab("X") 
 
+```
 
+### Problem 1E:
+
+```{r, warning=FALSE,message=FALSE}
+obs_median <- median(dist$X)
+
+theo_median1 <- log(2)/1
+
+theo_median2 <- log(2)/(1/2)
+
+theo_median3 <- log(2)/(1/3)
+
+print(obs_median)
+
+print(theo_median1)
+
+print(theo_median2)
+
+print(theo_median3)
+
+```
+
+### Problem 1F:
+
+```{r, warning=FALSE,message=FALSE}
+
+delta <- c(5, 1, .5, .25, .1, .01, .001, .0001)
+
+for (i in delta) {
+  theo_data <- c(seq(from = 0, to = 20, by = i))
+  dist_theo <- tibble(theo_data, dexp(theo_data, rate = 1/2)) %>% rename(X = 1, Y = 2)
+  integral = sum(dist_theo$Y*i)
+  print(paste("Density obtained using delta = ", i, ": ", round(integral, digits = 5), sep = ""))
+}
+
+```
+
+### Problem 1G:
+
+```{r, warning=FALSE,message=FALSE}
+
+expon_fun <- function(x) {
+  y = (1/2)*exp(-x/2)
+  return(y)
+}
+
+
+integrate(f = expon_fun, lower = -Inf, upper = Inf)
 ```
 
 ## Part 2
