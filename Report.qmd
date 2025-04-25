@@ -1,5 +1,5 @@
 ---
-title: "Assigment 1. Statistical Theory and Modeling"
+title: "Assignment 1. Statistical Theory and Modelling"
 format: html
 authors: "Caroline Birkehammar, Pablo Paras Ochoa, Steven Hiram Rubio Vasquez"
 editor: visual
