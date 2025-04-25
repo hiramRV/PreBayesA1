@@ -37,7 +37,7 @@ mean(dist)
 
 ```
 
-The true value for the mean given that $\lambda = 2$ or $\beta = 1/2$ is $2$ When drawing a sample of 10,000 we obtain $\bar{x} = 2.013022$ Therefore, we conclude that R is using the correct rate of parameterization.
+The true value for the mean given that $\lambda = 2$ or $\beta = 1/2$ is $2$. When drawing a sample of 10,000 we obtain $\bar{x} = 2.013022$. Therefore, we conclude that R is using the correct rate of parameterization.
 
 ### Problem 1b
 
@@ -86,7 +86,7 @@ ggplot() +
 
 ```
 
-Out of the three curves, it is clear that the orange one using \$ \beta = 1 \$ is the worse fit, as it underestimates the density of larger values and overestimates the density of smaller values. Out of the two other curves, using \$ \beta = 2 \$ for the blue one (which uses the same parameter value as when we generated a random sample) and \$ \beta = 3 \$ for the green one, it is not readily obvious which one is the better fit. The green pdf ($\beta = 3$) slightly overestimates large values and slightly underestimates small ones, but the blue pdf ($\beta = 2$) is also not a perfect fit.
+Out of the three curves, it is clear that the orange one using $\beta = 1$ is the worse fit, as it underestimates the density of larger values and overestimates the density of smaller values. Out of the two other curves, using $\beta = 2$ for the blue one (which uses the same parameter value as when we generated a random sample) and $\beta = 3$ for the green one, it is not readily obvious which one is the better fit. The green pdf ($\beta = 3$) slightly overestimates large values and slightly underestimates small ones, but the blue pdf ($\beta = 2$) is also not a perfect fit.
 
 ### Problem 1d
 
