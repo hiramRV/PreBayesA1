@@ -214,7 +214,7 @@ The distribution does not seem to follow the Poisson distribution, based on how 
 
 ### Problem 2b
 
-For the second task, we generate distribution curves for a Negative Binomial distribution and compare it with the previous result.
+We fit the data to a Negative Binomial distribution and compare it with the previous result.
 
 ```{r, warning=FALSE,message=FALSE}
 #| echo: false
@@ -231,11 +231,11 @@ ggplot() +
   geom_density(aes(df$VNeg3, color = "BNr100"), linewidth = 1.0,bw = 1.0) +
   geom_histogram(aes(data$nBugs,after_stat(density)),bins = 18,color="black",alpha=0.4, fill="#dde542")+
   theme_minimal() +
-  labs(title = "Data, poisson and negative binomial distributions",
+  labs(title = "Histogram of bug data, theoretical Poisson and Negative Binomial distributions",
        subtitle = "Comparing the distribution of number of bugs and 4 theoretical curves",
-       color = "Legend") +
-  xlab("Count of y")+xlim(-1,40)+ylim(0,0.18)+
-  ylab("Density")+scale_color_manual(values = colors,labels = c("BNr1"="NB r=1","BNr100"="NB r=100", "BNr3"="NB r=3","Poisson"="Poisson" ))
+       color = "Distributions") +
+  xlab("y")+xlim(-1,40)+ylim(0,0.18)+
+  ylab("Density")+scale_color_manual(values = colors,labels = c("BNr1"="NegBin r = 1", "BNr100"="NegBin r=100", "BNr3"="NegBin r = 3", "Poisson"="Poisson" ))
 
 ```
 
@@ -244,8 +244,6 @@ We can observe that, now, the curve that follows the distribution of the data be
 ## Part 3
 
 ### Problem 3a
-
-***Let*** $X \sim \mathrm{Normal}(\mu = 0, \sigma^2 = 1)$. We are now interested in the distribution of $Y=\exp(X)$. Obtain the distribution for $Y$ by simulating 10000 draws. Plot a histogram with 100 bins.
 
 ```{r}
 #| echo: false
@@ -262,14 +260,6 @@ hist(Y, breaks = 100, freq = F, ylim = c(0, 0.65), xlim = c(0, 10),
 ```
 
 ### Problem 3b
-
-***Use the method of transformation to show that the probability density for*** $Y$ is given by
-
-$$
-f(x)=\frac{1}{\sqrt{2\pi}x}\exp\Big(-\frac{1}{2}(\log(x)-\mu)^2\Big)
-$$
-
-***Overlay a plot of this density in the histogram from Problem 3a).***
 
 We know that for any function $X = f(x)$ and $Y = g(X)$, where $g(X)$ is an invertible, differentiable and monotonically increasing or decreasing variable, the probability density function of $Y$ is given by $$
 f_Y(y) = f_X\left(g^{-1}(y)\right) \left| \frac{d}{dy} g^{-1}(y) \right|,
@@ -306,8 +296,6 @@ curve(y_pdf(x), from = min(Y), to = 10, col = "red", lwd = 2, add = TRUE)
 ```
 
 ### Problem 3c
-
-***Use Monte Carlo simulation with*** $m=10000$ random draws to estimate $\mathrm{E}(Y)$ where $Y=\exp(X)$ and $X \sim \mathrm{Normal}(\mu = 0, \sigma^2 = 1)$. Check the convergence of the estimate by plotting the sequential Monte Carlo estimates for increasing Monte Carlo sample sizes of $10,20,30,\ldots,9900, 10000$. Does the estimate seem to converge (settle down) to the true expectation, which happens to be $\mathrm{E}(Y)=\exp(\frac{1}{2})$?
 
 ```{r}
 #| echo: false
