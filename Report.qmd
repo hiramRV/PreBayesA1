@@ -38,6 +38,8 @@ mean(dist)
 
 ```
 
+The value for the mean given that $$ \lambda = 2 $$ or $$ \beta = 1/2 $$ is $$2$$. When drawing a sample of 10,000 we obtain $$\bar{x} = 2.013022$$. Therefore, we can conclude that R is using the correct rate of parameterization.
+
 ### Problem 1B:
 
 ```{r, warning=FALSE,message=FALSE}
@@ -85,6 +87,8 @@ ggplot() +
 
 ```
 
+Of the three curves, it is clear that the one using $$ \beta = 1$$ (in orange) is the worse fit (as it underestimates the density of larger values and overestimates the density of smaller values). Of the two other curves using $$ \beta = 2 $$ (in blue, the actual theoretical distribution used to generate our sample) and $$ \beta = 3 $$ (in green) it is not readily obvious which one is the better fit. The distribution using $$ \beta = 3 $$ slightly overestimates large values and slightly underestimates small ones but $$ \beta = 2 $$ is also not a perfect fit.
+
 ### Problem 1D:
 
 ```{r, warning=FALSE,message=FALSE}
@@ -108,6 +112,8 @@ ggplot() +
 
 ```
 
+In this case it is far more obvious which theoretical CDF is the better fit. The one using $$ \beta = 2 $$ (in blue) is very closely aligned with the data while the the other two using $$ \beta = 1 $$ (in orange) and $$ \beta = 3 $$ (in green) are clearly different.
+
 ### Problem 1E:
 
 ```{r, warning=FALSE,message=FALSE}
@@ -128,6 +134,10 @@ print(theo_median2)
 print(theo_median3)
 
 ```
+
+A sample median is easily defined and obtained. One must simply order all observations by magnitude and select the one in the middle. Should there be an even number of observations, the two in the middle can be averaged to obtain it.
+
+For theoretical distributions we must do a little bit of math. In this case for the exponential distribution the median is defined as $$ med(x) = \frac{ln(2)}{\lambda} $$ in this case given that $$ \lambda = \frac{1}{\beta} $$ we obtain $$ \lambda = 1 $$, $$ \lambda = 1/2 $$ and $$ \lambda = 1/3 $$ for our three distributions. We then simply plug those values into the formula to obtain our results.
 
 ### Problem 1F:
 
