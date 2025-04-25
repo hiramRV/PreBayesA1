@@ -37,7 +37,7 @@ mean(dist)
 
 ```
 
-The true value for the mean given that \$ \lambda = 2 \$ or \$ \beta = 1/2 \$ is \$ 2 \$ When drawing a sample of 10,000 we obtain \$ \bar{x} = 2.013022 \$ Therefore, we conclude that R is using the correct rate of parameterization.
+The true value for the mean given that $\lambda = 2$ or $\beta = 1/2$ is $2$ When drawing a sample of 10,000 we obtain $\bar{x} = 2.013022$ Therefore, we conclude that R is using the correct rate of parameterization.
 
 ### Problem 1b
 
