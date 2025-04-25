@@ -235,7 +235,7 @@ ggplot() +
        subtitle = "Comparing the distribution of number of bugs and 4 theoretical curves",
        color = "Distributions") +
   xlab("y")+xlim(-1,40)+ylim(0,0.18)+
-  ylab("Density")+scale_color_manual(values = colors,labels = c("BNr1"="NegBin r = 1", "BNr100"="NegBin r=100", "BNr3"="NegBin r = 3", "Poisson"="Poisson" ))
+  ylab("Density")+scale_color_manual(values = colors,labels = c("BNr1"="NegBin r = 1", "BNr100"="NegBin r = 100", "BNr3"="NegBin r = 3", "Poisson"="Poisson lambda = 5.252747" ))
 
 ```
 
