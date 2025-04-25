@@ -214,7 +214,7 @@ The distribution does not seem to follow the Poisson distribution, based on how 
 
 ### Problem 2b
 
-We fit the data to a Negative Binomial distribution and compare it with the previous result.
+We fit a Negative Binomial distribution to the data and compare it with the previous result.
 
 ```{r, warning=FALSE,message=FALSE}
 #| echo: false
@@ -235,11 +235,11 @@ ggplot() +
        subtitle = "Comparing the distribution of number of bugs and 4 theoretical curves",
        color = "Distributions") +
   xlab("y")+xlim(-1,40)+ylim(0,0.18)+
-  ylab("Density")+scale_color_manual(values = colors,labels = c("BNr1"="NegBin r = 1", "BNr100"="NegBin r = 100", "BNr3"="NegBin r = 3", "Poisson"="Poisson lambda = 5.252747" ))
+  ylab("Density")+scale_color_manual(values = colors,labels = c("BNr1"="NegBin r = 1", "BNr3"="NegBin r = 3", "BNr100"="NegBin r = 100", "Poisson"="Poisson lambda = 5.252747" ))
 
 ```
 
-We can observe that, now, the curve that follows the distribution of the data better is the blue line (r=3), and the curve that's more similar to the poisson model is the green line (r=100). This is because...
+We observe that the curve that follows the distribution of the data best is the Negative Binomial distribution with r = 3 (the blue pdf). The curve that follows a Poisson distribution best is the Negative Binomial distribution with r = 100 (the green pdf). This is because the Negative Binomial distribution converges in distribution to a Poisson distribution as r increases.
 
 ## Part 3
 
