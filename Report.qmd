@@ -139,7 +139,7 @@ For theoretical distributions we must do a little bit of math. In this case for 
 
 ```{r, warning=FALSE,message=FALSE}
 
-delta <- c(5, 1, .5, .25, .1, .01, .001, .0001)
+delta <- c(5, 1, .5, .25, .1, .01, .001, .0001) # 5 and 1 also, just for fun :)
 
 for (i in delta) {
   theo_data <- c(seq(from = 0, to = 20, by = i))
