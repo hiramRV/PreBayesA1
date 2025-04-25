@@ -166,7 +166,7 @@ integrate(f = expon_fun, lower = 0, upper = Inf)
 
 ### Problem 2a
 
-After reading the data set, we select the bugs column and calculate the expected value (Lambda), with this, we attempt to fit a Poisson regression to the data with different bin sizes. As for the number of bins, the rule ***sqrt**(number of observations)* was used as a starting point.
+After reading the data set, we select the bugs column and calculate the expected value ($\lambda$) and fit a Poisson regression to the data. As for the number of bins, the rule ***sqrt**(number of observations)* was used as a starting point, but we tried different bin sizes.
 
 ```{r}
 y = data$nBugs 
@@ -182,8 +182,8 @@ plot1 <- ggplot() +
   geom_function(fun = function(x) lambda^x*exp(-lambda)/factorial(x))+
   theme_minimal() +
   labs(title = "Data and poisson distribution",
-       subtitle = "Comparing the distribution of number of bugs and the poisson distribution with n=9") +
-  xlab("Count of y") +
+       subtitle = "Comparing the distribution of number of bugs and the poisson distribution with n = 9") +
+  xlab("y") +
   ylab("Density")+
   xlim(0,35)
 
@@ -192,8 +192,8 @@ plot2 <- ggplot() +
   geom_function(fun = function(x) lambda^x*exp(-lambda)/factorial(x))+
   theme_minimal() +
   labs(
-       subtitle = "Comparing the distribution of number of bugs and the poisson distribution with n=18") +
-  xlab("Count of y") +
+       subtitle = "Comparing the distribution of number of bugs and the poisson distribution with n = 18") +
+  xlab("y") +
   ylab("Density")+
   xlim(0,35)
 
@@ -202,9 +202,9 @@ plot3 <- ggplot() +
   geom_function(fun = function(x) lambda^x*exp(-lambda)/factorial(x))+
   theme_minimal() +
   labs(
-       subtitle = "Comparing the distribution of number of bugs and the poisson distribution with n=27") +
-  xlab("Count of y") +
-  ylab("Density)")+
+       subtitle = "Comparing the distribution of number of bugs and the poisson distribution with n = 27") +
+  xlab("y") +
+  ylab("Density")+
   xlim(0,35)
 
 plot1 / plot2 / plot3
