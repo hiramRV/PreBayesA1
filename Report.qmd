@@ -153,8 +153,7 @@ expon_fun <- function(x) {
   return(y)
 }
 
-
-integrate(f = expon_fun, lower = -Inf, upper = Inf)
+integrate(f = expon_fun, lower = 0, upper = Inf)
 ```
 
 ## Part 2
