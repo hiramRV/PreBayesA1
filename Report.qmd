@@ -169,8 +169,8 @@ integrate(f = expon_fun, lower = 0, upper = Inf)
 After reading the data set, we select the bugs column and calculate the expected value ($\lambda$) and fit a Poisson regression to the data. As for the number of bins, the rule ***sqrt**(number of observations)* was used as a starting point, but we tried different bin sizes.
 
 ```{r}
-y = data$nBugs 
-lambda=mean(y)
+y <- data$nBugs 
+lambda <- mean(y)
 lambda
 
 ```
@@ -181,7 +181,7 @@ plot1 <- ggplot() +
   geom_histogram(aes(data$nBugs,after_stat(density)),bins = 9,color="black",alpha=0.4, fill="#dde542")+
   geom_function(fun = function(x) lambda^x*exp(-lambda)/factorial(x))+
   theme_minimal() +
-  labs(title = "Data and poisson distribution",
+  labs(title = "Data and Poisson distribution",
        subtitle = "Comparing the distribution of number of bugs and the Poisson distribution with n = 9") +
   xlab("y") +
   ylab("Density")+
