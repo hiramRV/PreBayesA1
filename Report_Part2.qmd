@@ -1,0 +1,57 @@
+---
+title: "Assignment 1. Statistical Theory and Modelling"
+format: html
+authors: "Caroline Birkehammar, Pablo Paras Ochoa, Steven Hiram Rubio Vasquez"
+editor: visual
+---
+
+## Assignment 1, part 2. 
+
+Import of the libraries and data
+
+```{r,warning=FALSE,message=FALSE}
+#| echo: false
+library(patchwork)
+library(pacman)
+p_load(readxl, tidyverse, ggplot2, janitor, e1071, scales, ggridges)
+
+Sys.setlocale("LC_ALL", "es_ES.UTF-8") 
+options(scipen=999) 
+
+set.seed(42)
+
+```
+
+## Part 4
+
+### Problem 4a
+
+### Problem 4b
+
+### Problem 4c
+
+### Problem 4d
+
+## Part 5
+
+### Problem 5a
+
+### Problem 5b
+
+### Problem 5c
+
+### Problem 5d
+
+## Part 6
+
+### Problem 6a
+
+### Problem 6b
+
+### Problem 6c
+
+## Bonus Problem
+
+## References
+
+Source code: <https://github.com/hiramRV/PreBayesA1>
