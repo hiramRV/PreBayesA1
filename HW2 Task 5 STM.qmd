@@ -1,45 +1,7 @@
 ---
-title: "Assignment 1. Statistical Theory and Modelling"
+title: "HW2 Task 5"
 format: html
-authors: "Caroline Birkehammar, Pablo Paras Ochoa, Steven Hiram Rubio Vasquez"
-editor: visual
 ---
-
-## Assignment 1, part 2.
-
-Import of the libraries and data
-
-```{r,warning=FALSE,message=FALSE}
-#| echo: false
-library(patchwork)
-library(pacman)
-p_load(readxl, tidyverse, ggplot2, janitor, e1071, scales, ggridges)
-
-Sys.setlocale("LC_ALL", "es_ES.UTF-8") 
-options(scipen=999) 
-
-set.seed(42)
-
-```
-
-## Part 4
-
-Letting a = (1,0,2)^T and b = (1,0,-1)^T, we perform the dot product. 
-### Problem 4a
-```{r}
-a = c(1,0,2)
-b = c(1,0,-1)
-(a%*%b)[1]
-```
-Given that the result is -1, we can state than a and b are NOT orthogonal.
-
-### Problem 4b
-
-### Problem 4c
-
-### Problem 4d
-
-## Part 5
 
 ## Problem 5 - Numerical maximum likelihood for negative binomial distribution
 
@@ -105,17 +67,3 @@ se_muhat <- sqrt(solve(opt_2$hessian)[2, 2])
 ```
 
 The standard error for the mean estimate $SE_\mu$ is $0.5133$, and the standard error for the $r$ estimate $SE_r$ is $0.2875$. Both standard errors are rounded to four decimals.
-
-## Part 6
-
-### Problem 6a
-
-### Problem 6b
-
-### Problem 6c
-
-## Bonus Problem
-
-## References
-
-Source code: <https://github.com/hiramRV/PreBayesA1>
