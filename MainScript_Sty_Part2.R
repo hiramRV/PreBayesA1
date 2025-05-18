@@ -1,0 +1,34 @@
+library(matlib)
+#Create a matrix with N(0,1)
+X= matrix(rnorm(30,mean=0, sd=1) ,nrow = 10, ncol = 3,byrow = TRUE)
+X
+# Given the Vector B
+b = c(1,1,2)
+b
+#Multiply them
+mu = (X%*%b)
+mu
+
+#Vector or errors. 
+epsilon= matrix(rnorm(10,mean=0, sd=0.1) ,nrow = 10, ncol = 1,byrow = TRUE)
+epsilon
+
+#Vector of response observations
+y = mu + epsilon
+y
+
+#Compute the Least Squares estimate
+B_1 = solve((t(X)%*%X))
+B_2 = t(X)%*%y
+b_hat = B_1%*%B_2
+b_hat
+
+b_hat2 = solve(t(X) %*% X) %*% t(X) %*% y
+
+#Last check 
+lm(y~mu + epsilon)
+
+#Test
+X2= matrix(c(1,2,3,3,5,6,6,7,1),nrow = 3, ncol = 3,byrow = TRUE)
+invX2 = solve(X2)
+invX2%*%X2
