@@ -1,0 +1,69 @@
+---
+title: "HW2 Task 5"
+format: html
+---
+
+## Problem 5 - Numerical maximum likelihood for negative binomial distribution
+
+#### Problem 5a
+
+If we model our data using a Negative Binomial distribution, $Y$ (nBugs) with a mean estimate of $\hat\mu=\bar y \approx 5.2528$ is the number of Bernoulli trials until $r$ "successes" or "failures". Whether $r$ respresents successes or failures depends on the data and the research question. We do not have access to information about the dataset and what its parameters represent, so we leave out the interpretation of the results in any other aspect than purely statistical.
+
+In this task, we are interested in finding the maximum likelihood estimate of $r$ given our data on $Y$. To do this, we create a function to find the negative log-likelihood function of our data, and then find the minimum value of that function (the optim function in R performs minimization by default, so we negate the log-likelihood function).
+
+```{r}
+
+# Negative binomial log likelihood function
+loglik_negbin <- function(r, y){
+  return(-sum(dnbinom(y, r, mu = 5.2528, log = TRUE)))
+}
+
+opt <- optim(par = 1, gr = NULL, fn = loglik_negbin, y, method = "L-BFGS-B", lower = 0.0001, hessian = TRUE)
+
+rhat <- opt$par
+```
+
+The maximum likelihood estimate of $r$ given our data is $\hat r \approx 1.4737$.
+
+#### Problem 5b
+
+The task is to find the standard error of the maximum likelihood estimate of $r$, which is the same as the standard deviation in the sampling distribution of the estimator. In large samples (n \> 30) we can approximate the sampling distribution of the estimator with a normal distribution, so that $\hat{r} \sim N\left( r_0, \frac{1}{-l''(\hat r)} \right)$ approximately, and this is what we use to calculate the standard error below.
+
+```{r}
+
+mle_se <- 1 / sqrt(opt$hessian[1])
+```
+
+The standard error of our maximum likelihood estimate is approximately $SE_r \approx 0.2875$.
+
+#### Problem 5c
+
+To estimate both $\mu$ and $r$ using the maximum likelihood method we use the same method as before, but insert a vector of the two parameters to be estimated into the log-likelihood function instead of only one parameter. Then we find the best estimators by finding the minimum values of the negative log-likelihood functions.
+
+```{r}
+
+# Joint negative log-likelihood function
+loglik_negbin_2 <- function(param) {
+  r  <- param[1]
+  mu <- param[2]
+  return(-sum(dnbinom(y, r, mu = mu, log = TRUE)))
+}
+
+opt_2 <- optim(par = c(1, 1), fn = loglik_negbin_2, method = "L-BFGS-B", lower = c(0.0001, 0.0001), hessian = TRUE)
+
+rhat  <- opt_2$par[1]
+muhat <- opt_2$par[2]
+```
+
+The estimated value for $\mu$ is approximately $5.2528$, and the estimated value for $r$ is approximately $1.4737$, the same value that we received before when we estimated only one parameter.
+
+#### Problem 5d
+
+Similarly to before, we use the second derivatives to calculate the standard errors of the parameter estimates. This time they are stored in a Hessian matrix however, so the code has to be adjusted slightly.
+
+```{r}
+se_rhat  <- sqrt(solve(opt_2$hessian)[1, 1])
+se_muhat <- sqrt(solve(opt_2$hessian)[2, 2])
+```
+
+The standard error for the mean estimate $SE_\mu$ is $0.5133$, and the standard error for the $r$ estimate $SE_r$ is $0.2875$. Both standard errors are rounded to four decimals.
