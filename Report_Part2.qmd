@@ -11,9 +11,8 @@ editor: visual
 
 ```{r,warning=FALSE,message=FALSE}
 #| echo: false
-library(patchwork)
 library(pacman)
-p_load(readxl, tidyverse, ggplot2, janitor, e1071, scales, ggridges)
+p_load(readxl, tidyverse, ggplot2, janitor, e1071, scales, ggridges, patchwork)
 
 Sys.setlocale("LC_ALL", "es_ES.UTF-8") 
 options(scipen = 999) 
