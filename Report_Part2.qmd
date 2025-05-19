@@ -34,7 +34,7 @@ For two orthogonal vectors, the dot product will be equal to 0. Since our result
 
 #### Problem 4b
 
-First we simulate a 10x3 matrix $(X)$ with standard normal $N(0,1)$ random variables and a matrix $b = (1,1,2)^T$.
+First we simulate a $10x3$ matrix $(X)$ with standard normal $N(0,1)$ random variables and a matrix $b = (1,1,2)^T$.
 
 ```{r}
 set.seed(22)
@@ -54,7 +54,7 @@ mu = (X%*%b)
 mu
 ```
 
-The first element of the matrix $\mu_{[1,1]}$ = 3.988697 is obtained by calculating the dot product between the first row of $X$ $(-0.512139088, 2.48518368, 1.0078262)$ and the vector $b$. We can calculate it by hand to corroborate the result.
+The first element of the matrix $\mu_{[1,1]}=3.988697$ is obtained by calculating the dot product between the first row of $X$ $(-0.512139088, 2.48518368, 1.0078262)$ and the vector $b$. We can calculate it by hand to corroborate the result.
 
 ```{r}
 mu_1 = (1*-0.512139088) + (1*2.48518368) + (2*1.0078262)
@@ -63,7 +63,7 @@ mu_1
 
 #### Problem 4c
 
-We simulate the vector of errors $epsilon$ from a normal distribution with mean = 0 and standard deviation = 0.1.
+We simulate the vector of errors $epsilon$ from a normal distribution with $mean = 0$ and standard $deviation = 0.1$.
 
 ```{r}
 epsilon = matrix(rnorm(10, mean = 0, sd = 0.1), nrow = 10, ncol = 1, byrow = TRUE)
@@ -85,9 +85,36 @@ b_hat
 
 ```
 
-The result of our least squares estimation of the coefficients, $\hat{\beta}$, is the vector (0.9974657, 1.0091050, 1.96766249).
+This result of our least squares estimation of the coefficients, $\hat{\beta}$, is similar to the input vector that we used, which was $(1, 1, 2)^T$.
 
 #### Problem 4d
+
+For this task, we first calculate the vector or residuals.
+
+```{r}
+error = y-X%*%b_hat
+error
+```
+
+Then we can estimate the variance of the errors as follows.
+
+```{r}
+n=10
+p=3
+var_e = (t(error)%*%error)/(n-p)
+var_e[1]
+```
+
+At last we can obtain the covariance matrix and extract the square root of the values in the diagonal.
+
+```{r}
+CoVar = var_e[1]*solve(t(X) %*% X)
+CoVar_ind = matrix(c(sqrt(CoVar[1]),
+                     sqrt(CoVar[5]),
+                     sqrt(CoVar[9])),
+                  nrow=3,ncol=1)
+CoVar_ind
+```
 
 ## Part 5
 
