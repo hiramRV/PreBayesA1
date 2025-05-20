@@ -197,9 +197,33 @@ The standard error for the mean estimate $SE_\mu$ is $0.5133$, and the standard 
 
 ### Problem 6a
 
+Text
+
+```{r}
+
+modelito <- glm(num_awards ~ prog + math, family="poisson", data=p)
+
+```
+
 ### Problem 6b
 
+Text
+
+```{r}
+
+
+
+```
+
 ### Problem 6c
+
+Text
+
+```{r}
+
+
+
+```
 
 ## Bonus Problem
 
