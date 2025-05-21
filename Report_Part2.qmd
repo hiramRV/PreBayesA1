@@ -210,6 +210,9 @@ log_like <- function(par) {
   
   
 }
+
+optim(par, fn, gr = NULL, method = c("BFGS"))
+
 ```
 
 ### Problem 6b
