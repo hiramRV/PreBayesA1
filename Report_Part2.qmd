@@ -201,8 +201,15 @@ Text
 
 ```{r}
 
-modelito <- glm(num_awards ~ prog + math, family="poisson", data=p)
+modelito <- glm(nBugs ~ ., family = "poisson", data = data)
 
+summary(modelito)
+
+log_like <- function(par) {
+  
+  
+  
+}
 ```
 
 ### Problem 6b
