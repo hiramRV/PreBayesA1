@@ -99,8 +99,8 @@ error
 Then we can estimate the variance of the errors as follows.
 
 ```{r}
-n=10
-p=3
+n=nrow(X)
+p=ncol(X)
 var_e = (t(error)%*%error)/(n-p)
 var_e[1]
 ```
@@ -112,7 +112,7 @@ CoVar = var_e[1]*solve(t(X) %*% X)
 CoVar_ind = matrix(c(sqrt(CoVar[1]),
                      sqrt(CoVar[5]),
                      sqrt(CoVar[9])),
-                  nrow=3,ncol=1)
+                  nrow=1,ncol=3)
 CoVar_ind
 ```
 

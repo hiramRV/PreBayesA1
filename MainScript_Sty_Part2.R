@@ -26,8 +26,8 @@ b_hat
 b_hat2 = solve(t(X) %*% X) %*% t(X) %*% y
 
 #4d)
-n=10
-p=3
+n=nrow(X)
+p=ncol(X)
 #Vector of residuals
 error = y-X%*%b_hat
 error
@@ -37,10 +37,10 @@ var_e[1]
 #Covariance matrix of the least squares estimator
 CoVar = var_e[1]*solve(t(X) %*% X)
 # Get the errors of each row
-CoVar_ind = matrix(c(sqrt(CoVar[1]),sqrt(CoVar[5]),sqrt(CoVar[9])),nrow=3,ncol=1)
+CoVar_ind = matrix(c(sqrt(CoVar[1]),sqrt(CoVar[5]),sqrt(CoVar[9])),nrow=1,ncol=3)
 CoVar_ind
 
-
+sqrt(diag(CoVar))
 #Last check 
 lm(y~mu + epsilon)
 #Test
