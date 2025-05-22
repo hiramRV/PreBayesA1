@@ -245,13 +245,18 @@ var_b_sombrero <- diag(cov_b_sombrero)
 
 sd_b_sombrero <- sqrt(var_b_sombrero)
 
-menor <- c(b_con_sombrerito - 1.96*sd_b_sombrero)
+menor <- b_con_sombrerito - 1.96*sd_b_sombrero
 
-mayor <- c(b_con_sombrerito + 1.96*sd_b_sombrero)
+mayor <- b_con_sombrerito + 1.96*sd_b_sombrero
 
-menor
+conf_int <- tibble(
+  beta = b_con_sombrerito,
+  std_err = sd_b_sombrero,
+  lower = menor,
+  upper = mayor
+)
 
-mayor
+print(conf_int)
 
 ```
 
