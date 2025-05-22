@@ -201,9 +201,11 @@ Text
 
 ```{r}
 
+# Modelito is for verification purposes
 modelito <- glm(nBugs ~ nCommits + propC + propJava + complexity,
                  family = poisson, data = data)
 
+# This is the actual regression using numerical optimization 
 y <- data$nBugs
 
 X <- cbind(data$intercept, data$nCommits, data$propC, data$propJava, data$complexity)
@@ -220,6 +222,7 @@ init_vals <- c(0, 0, 0, 0, 0)
 optReg <- optim(init_vals, log_like_pois_reg, gr = NULL, method = c("BFGS"), y, X,
                 control = list(fnscale = -1), hessian = T)
 
+# Comparing both results to ensure the results from my function are accurate 
 optReg$par
 
 summary(modelito)
