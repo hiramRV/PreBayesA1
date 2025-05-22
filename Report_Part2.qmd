@@ -273,14 +273,14 @@ pred <- exp(x92 %*% b_con_sombrerito)
 print(pred)
 
 # Testing with modelito to verify the answer
-new_obs <- data.frame(
+x92_plus <- data.frame(
   nCommits = 10,
   propC = 0.45,
   propJava = 0.5,
   complexity = 0.89
 )
 
-pred <- predict(modelito, newdata = new_obs, type = "response")
+pred <- predict(modelito, newdata = x92_plus, type = "response")
 
 print(pred)
 
