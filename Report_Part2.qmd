@@ -219,11 +219,14 @@ log_like_pois_reg <- function(betas, y, X) {
 
 init_vals <- c(0, 0, 0, 0, 0)
 
-optReg <- optim(init_vals, log_like_pois_reg, gr = NULL, method = c("BFGS"), y, X,
+reg_opt <- optim(init_vals, log_like_pois_reg, gr = NULL, method = c("BFGS"), y, X,
                 control = list(fnscale = -1), hessian = T)
 
+b_con_sombrerito <- reg_opt$par
+
+
 # Comparing both results to ensure the results from my function are accurate 
-optReg$par
+b_con_sombrerito
 
 summary(modelito)
 
@@ -236,8 +239,19 @@ Text
 
 ```{r}
 
+cov_b_sombrero <- -solve(reg_opt$hessian)
 
+var_b_sombrero <- diag(cov_b_sombrero)
 
+sd_b_sombrero <- sqrt(var_b_sombrero)
+
+menor <- c(b_con_sombrerito - 1.96*sd_b_sombrero)
+
+mayor <- c(b_con_sombrerito + 1.96*sd_b_sombrero)
+
+menor
+
+mayor
 
 ```
 
@@ -249,9 +263,7 @@ Text
 
 x92 <- c(1, 10, 0.45, 0.5, 0.89)
 
-betas <- optReg$par
-
-pred <- x92*betas
+pred <- x92*b_con_sombrerito
 
 print(sum(pred))
 ```
