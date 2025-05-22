@@ -197,7 +197,7 @@ The standard error for the mean estimate $SE_\mu$ is $0.5133$, and the standard 
 
 ### Problem 6a
 
-Text
+There isn't really a question *per se* for this problem and therefore no concrete answer. The model fit is in the code below. As can be seen, the estimates obtained through numerical optimization using log likelihood very closely match those obtained using the pre-built glm function.
 
 ```{r}
 
@@ -235,7 +235,7 @@ summary(modelito)
 
 ### Problem 6b
 
-Text
+Only one of the covariates does not seem to be statistically different from 0 (the number of commits). All other confidence intervals do not cross over 0 but the confidence interval for nCommits does.
 
 ```{r}
 
@@ -262,7 +262,7 @@ print(conf_int)
 
 ### Problem 6c
 
-Text
+The predicted number of bugs for release 92 is 2.95222 given both the covariate vector for release 92 and our model.
 
 ```{r}
 
