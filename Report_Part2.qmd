@@ -34,7 +34,7 @@ For two orthogonal vectors, the dot product will be equal to 0. Since our result
 
 #### Problem 4b
 
-First we simulate a $10x3$ matrix $(X)$ with standard normal $N(0,1)$ random variables and a matrix $b = (1,1,2)^T$.
+First we simulate a $10$x$3$ matrix $(X)$ with standard normal $N(0,1)$ random variables and a matrix $b = (1,1,2)^T$.
 
 ```{r}
 set.seed(22)
@@ -117,7 +117,7 @@ CoVar_ind
 
 ## Part 5
 
-#### Import data :)
+#### Import data
 
 ```{r}
 data = read.csv("https://github.com/StatisticsSU/STM/raw/main/assignment/bugs.csv",
@@ -289,7 +289,6 @@ pred <- predict(modelito, newdata = x92_plus, type = "response")
 print(pred)
 ```
 
-## Bonus Problem
 
 ## References
 
