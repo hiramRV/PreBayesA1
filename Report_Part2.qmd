@@ -262,7 +262,7 @@ print(conf_int)
 
 ### Problem 6c
 
-The predicted number of bugs for release 92 is around bugs 19.15 given both the covariate vector for release 92 and our model. Note that we have to use exp() for our betas.
+The predicted number of bugs for release 92 is around bugs 19.15 given both the covariate vector for release 92 and our model.
 
 ```{r}
 
