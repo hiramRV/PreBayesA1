@@ -201,17 +201,29 @@ Text
 
 ```{r}
 
-modelito <- glm(nBugs ~ ., family = "poisson", data = data)
+modelito <- glm(nBugs ~ nCommits + propC + propJava + complexity,
+                 family = poisson, data = data)
 
-summary(modelito)
+y <- data$nBugs
 
-log_like <- function(par) {
-  
-  
+X <- cbind(data$nCommits, data$propC, data$propJava, data$complexity)
+
+log_like_pois_reg <- function(betas, y, X) {
+  lambda <- exp(X %*% betas)
+  logLik <- sum(dpois(y, lambda = lambda, log = T))
+  return(logLik)
   
 }
 
-optim(par, fn, gr = NULL, method = c("BFGS"))
+init_vals <- c(0, 0, 0, 0)
+
+optReg <- optim(init_vals, log_like_pois_reg, gr = NULL, method = c("BFGS"), y, X,
+                control = list(fnscale = -1), hessian = T)
+
+optReg$par
+
+summary(modelito)
+
 
 ```
 
