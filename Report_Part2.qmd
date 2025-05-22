@@ -206,7 +206,7 @@ modelito <- glm(nBugs ~ nCommits + propC + propJava + complexity,
 
 y <- data$nBugs
 
-X <- cbind(data$nCommits, data$propC, data$propJava, data$complexity)
+X <- cbind(data$intercept, data$nCommits, data$propC, data$propJava, data$complexity)
 
 log_like_pois_reg <- function(betas, y, X) {
   lambda <- exp(X %*% betas)
@@ -215,7 +215,7 @@ log_like_pois_reg <- function(betas, y, X) {
   
 }
 
-init_vals <- c(0, 0, 0, 0)
+init_vals <- c(0, 0, 0, 0, 0)
 
 optReg <- optim(init_vals, log_like_pois_reg, gr = NULL, method = c("BFGS"), y, X,
                 control = list(fnscale = -1), hessian = T)
