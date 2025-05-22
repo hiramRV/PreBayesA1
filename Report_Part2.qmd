@@ -1,6 +1,6 @@
 ---
 title: "Assignment 2. Statistical Theory and Modelling"
-format: html
+format: pdf
 authors: "Caroline Birkehammar, Pablo Paras Ochoa, Steven Hiram Rubio Vasquez"
 editor: visual
 ---
@@ -288,7 +288,6 @@ pred <- predict(modelito, newdata = x92_plus, type = "response")
 
 print(pred)
 ```
-
 
 ## References
 
